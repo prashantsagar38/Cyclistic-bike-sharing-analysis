@@ -1,7 +1,104 @@
 # Cyclistic-bike-sharing-analysis
-Case Study 1: How Does a Bike-Share Navigate Speedy Success?
+## Case Study: How Does a Bike-Share Navigate Speedy Success?
+The purpose of this document is to consolidate downloaded Divvy data into a single dataframe and then conduct simple analysis to help answer the key question: “In what ways do members and casual riders use Divvy bikes differently?”
 
-### Load dataset CSV files (12 months of Cyclistic trip data for FY 2020)
+### Introduction
+This exploratory analysis case study is towards Capstome project requirement for [Google Data Analytics Professional Certificate]. The case study involves a bikeshare company's data of its customer's trip details over a 12 month period for 2020.
+
+The analysis will follow the 6 phases of the Data Analysis process: Ask, Prepare, Process, Analyze, and Act. A brief explanation of these processes:
+
+#### Ask
+
+- Ask effective questions
+- Define the scope of the analysis
+- Define what success looks like
+
+#### Prepare
+
+- Verify data’s integrity
+- Check data credibility and reliability
+- Check data types
+- Merge datasets
+
+#### Process
+
+- Clean, Remove and Transform data
+- Document cleaning processes and results
+
+#### Analyze
+
+- Identify patterns
+- Draw conclusions
+- Make predictions
+
+#### Share
+
+- Create effective visuals
+- Create a story for data
+- Share insights to stakeholders
+
+#### Act
+
+- Give recommendations based on insights
+- Solve problems
+- Create something new
+
+<br/>
+
+### 1. Ask
+
+
+#### Scenario
+
+Marketing team needs to design marketing strategies aimed at converting casual riders into annual members. In order to do that, however, the marketing analyst team needs to better understand how annual members and casual riders differ.
+
+#### Stakeholders:
+
+- Director of marketing
+- Cyclistic executive team
+
+##### Objective
+
+Hence, the objective for this analysis is to throw some light on how the two types of customers: annual members and casual riders, use Cyclistic bikeshare differently, based on few parameters that can be calculated/ obtained from existing data.
+
+#### Deliverables:
+
+- Insights on how annual members and casual riders use Cyclistic bikes differently
+- Provide effective visuals and relevant data to support insights
+- Use insights to give three recommendations to convert casual riders to member riders
+
+<br/>
+
+<br/>
+
+### 2. Prepare
+
+#### Data Source
+
+A total of **12 CSV files** have been made available for each month starting from **January 2020 to December 2020**. Each file captures the details of every ride logged by the customers of Cyclistic. This data that has been made publicly available has been scrubbed to omit rider's personal information.
+
+The combined size of all the 12 CSV files is close to 950 MB. Data cleaning in spreadsheets will be time-consuming and slow compared to R. I am choosing R simply because I could do both data wrangling and analysis/ visualizations in the same platform. 
+
+<br/>
+
+<br/>
+
+#### Load Libraries
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+library(lubridate)
+library(dplyr)
+library(readr)
+library(janitor)
+library(data.table)
+library(tidyr)
+```
+
+<br/>
+
+### Load dataset CSV files
 
 ```{r loading data}
 tripdata_Q1_2020 <- read.csv("C:/Users/PSagar/Downloads/Divvy_trip_data_FY2020/Divvy_Trips_2020_Q1.csv")
@@ -173,6 +270,7 @@ all_trips_v2 %>%
   summarise(number_of_rides = n(),average_duration = mean(ride_duration)) %>% #calculates the number of rides and average duration 
   arrange(usertype,weekday) #sorts usertype and weekday
 ```
+# Creating Visualizations
 ### Visualize the number of rides by rider type
 
 ```{r}
