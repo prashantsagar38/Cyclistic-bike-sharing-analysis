@@ -1,19 +1,6 @@
 # Cyclistic-bike-sharing-analysis
 Case Study 1: How Does a Bike-Share Navigate Speedy Success?
 
----
-title: "Cyclistic-bike Trips Analysis"
-author: "Prashant Sagar"
-date: "2023-09-29"
-output:
-  html_document: default
-  pdf_document: default
----
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
 #### Load dataset CSV files (12 months of Cyclistic trip data for FY 2020)
 
 ```{r loading data}
@@ -29,7 +16,7 @@ tripdata_202011 <- read.csv("C:/Users/PSagar/Downloads/Divvy_trip_data_FY2020/20
 tripdata_202012 <- read.csv("C:/Users/PSagar/Downloads/Divvy_trip_data_FY2020/202012-divvy-tripdata.csv")
 ```
 
-#Data wrangling and combine into single dataframe
+# Data wrangling and combine into single dataframe
 ```{r}
 colnames(tripdata_Q1_2020)
 colnames(tripdata_202004)
