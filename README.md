@@ -130,10 +130,12 @@ colnames(tripdata_202012)
 ```{r structure of df}
 str(tripdata_202012)
 ```
+### start_station_id & end_station_id are not consistent in tripdata_202012.csv. Convert the inconsistent ones from char to int datatype since all other dataframe are in this format.
+
 ```{r convert datatype}
 tripdata_202012 <- mutate(tripdata_202012, start_station_id = as.integer(start_station_id), end_station_id = as.integer(end_station_id))
 ```
-
+### binding all dataframes into one dataframe
 ```{r add all df into single df}
 all_trips <- bind_rows(tripdata_Q1_2020, tripdata_202004, tripdata_202005, tripdata_202006, tripdata_202007, tripdata_202008, tripdata_202009, tripdata_202010, tripdata_202011, tripdata_202012)
 ```
@@ -158,7 +160,7 @@ all_trips <- all_trips %>%
 str(all_trips)
 ```
 
-### remove not required columns
+### Remove columns not required or beyond the scope of project
 ```{r}
 all_trips <- all_trips %>%
   select(-c(start_lat, start_lng, end_lat, end_lng))
@@ -293,3 +295,23 @@ all_trips_v2 %>%
   ggplot(aes(x = weekday, y = average_duration, fill = usertype)) + geom_col(position = "dodge")
 ```
 
+# Important Findings
+- Casual riders made 41% of total trips contributing to 66% of total trip duration between Jan'20 - Dec'20. Member riders make up 59% of total trips contributing to 34% of total trip duration between Jan'20 - Dec'20
+
+- Usage (based on trip duration) of bikes by casual riders is almost twice that of member riders.
+
+- Casual customers use bikeshare services more during weekends, while members use them consistently over the entire week.
+
+- Average trip duration of casual riders is more than twice that of member rider over any given day of the week cumulatively.
+
+- Casual riders ride longer during first half of the year compared to the second half, while members clock relatively similar average trip duration month over month.
+
+- Casual riders prefer electric bikes the most while classic bikes are popular among members.
+
+# Recommendations
+
+- Provide attractive promotions for casual riders on weekdays so that casual members use the bikeshare services more uniformly across the entire week.
+
+- Offer discounted membership fee for renewals after the first year. It might attract casual riders to take up membership.
+
+- Offer discounted pricing during non-busy hours so that casual riders might choose to use bikes more often and level out demand over the day.
