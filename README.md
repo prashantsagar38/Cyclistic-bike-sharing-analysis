@@ -1,7 +1,7 @@
 # Cyclistic-bike-sharing-analysis
 Case Study 1: How Does a Bike-Share Navigate Speedy Success?
 
-#### Load dataset CSV files (12 months of Cyclistic trip data for FY 2020)
+### Load dataset CSV files (12 months of Cyclistic trip data for FY 2020)
 
 ```{r loading data}
 tripdata_Q1_2020 <- read.csv("C:/Users/PSagar/Downloads/Divvy_trip_data_FY2020/Divvy_Trips_2020_Q1.csv")
@@ -16,7 +16,7 @@ tripdata_202011 <- read.csv("C:/Users/PSagar/Downloads/Divvy_trip_data_FY2020/20
 tripdata_202012 <- read.csv("C:/Users/PSagar/Downloads/Divvy_trip_data_FY2020/202012-divvy-tripdata.csv")
 ```
 
-# Data wrangling and combine into single dataframe
+### Data wrangling and combine into single dataframe
 ```{r}
 colnames(tripdata_Q1_2020)
 colnames(tripdata_202004)
@@ -41,7 +41,7 @@ tripdata_202012 <- mutate(tripdata_202012, start_station_id = as.integer(start_s
 all_trips <- bind_rows(tripdata_Q1_2020, tripdata_202004, tripdata_202005, tripdata_202006, tripdata_202007, tripdata_202008, tripdata_202009, tripdata_202010, tripdata_202011, tripdata_202012)
 ```
 
-#rename colnames
+### rename colnames
 ```{r rename columns}
 all_trips <- all_trips %>%
   rename(trip_id = ride_id
@@ -61,13 +61,13 @@ all_trips <- all_trips %>%
 str(all_trips)
 ```
 
-#remove not required columns
+### remove not required columns
 ```{r}
 all_trips <- all_trips %>%
   select(-c(start_lat, start_lng, end_lat, end_lng))
 ```
 
-#Perform data cleaning and prepare data for analysis
+### Perform data cleaning and prepare data for analysis
 
 ```{r list of colnames}
 colnames(all_trips)
@@ -91,7 +91,7 @@ summary(all_trips)
 table(all_trips$usertype)
 ```
 
-#create calculated columns to aggregate data
+### Create calculated columns to aggregate data
 
 ```{r create date column}
 all_trips$date <- as.Date(all_trips$start_time)
@@ -125,7 +125,7 @@ is.numeric(all_trips$ride_duration)
 all_trips_v2 <- all_trips[!(all_trips$from_station_name == "HQ QR" | all_trips$ride_duration<0),]
 ```
 
-#Conduct Descriptive Analysis
+# Conduct Descriptive Analysis
 
 ```{r mean of ride duration}
 mean(all_trips_v2$ride_duration)
@@ -142,7 +142,7 @@ min(all_trips_v2$ride_duration)
 ```{r}
 summary(all_trips_v2$ride_duration)
 ```
-#Comparing member and casual users
+### Comparing member and casual users
 
 ```{r}
 aggregate(all_trips_v2$ride_duration ~ all_trips_v2$usertype, FUN = mean)
@@ -154,18 +154,18 @@ aggregate(all_trips_v2$ride_duration ~ all_trips_v2$usertype, FUN = min)
 ```{r ride_duration by each day}
 aggregate(all_trips_v2$ride_duration ~ all_trips_v2$usertype + all_trips_v2$day_of_week, FUN = mean)
 ```
-# Notice that the days of the week are out of order
+### Notice that the days of the week are out of order
 
 ```{r order day_of_week}
 all_trips_v2$day_of_week <- ordered(all_trips_v2$day_of_week, levels=c("Sunday","Monday","Tuesday","Wednesday","Thrusday","Friday","Saturday"))
 ```
 
-# Re-run average ride by each day for members vs casual users
+### Re-run average ride by each day for members vs casual users
 
 ```{r average ride_duration per user per day}
 aggregate(all_trips_v2$ride_duration ~ all_trips_v2$usertype + all_trips_v2$day_of_week, FUN = mean)
 ```
-# Analyze ridership data by type and weekday
+### Analyze ridership data by type and weekday
 ```{r}
 all_trips_v2 %>%
   mutate(weekday = wday(start_time,label = TRUE)) %>% #creates weekday field using wday func
@@ -173,7 +173,7 @@ all_trips_v2 %>%
   summarise(number_of_rides = n(),average_duration = mean(ride_duration)) %>% #calculates the number of rides and average duration 
   arrange(usertype,weekday) #sorts usertype and weekday
 ```
-# Visualize the number of rides by rider type
+### Visualize the number of rides by rider type
 
 ```{r}
 all_trips_v2 %>%
@@ -184,7 +184,7 @@ all_trips_v2 %>%
   ggplot(aes(x=weekday,y=number_of_rides,fill=usertype)) + geom_col(position = "dodge")
 ```
 
-#Create visualization for average duration
+### Create visualization for average duration
 
 ```{r}
 all_trips_v2 %>%
